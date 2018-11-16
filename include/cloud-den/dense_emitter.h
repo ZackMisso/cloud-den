@@ -4,6 +4,15 @@ template <typename T>
 class DensityEmitter
 {
 public:
-    T calculateDensity(T x, T y, T z) const = 0;
-    std::vector<T> generateDensityGrid(int w, int h, int d) const = 0;
+    void calculateDensity(T x,
+                          T y,
+                          T z,
+                          T& scat,
+                          T& abs) const = 0;
+
+    void generateDensityGrid(int w,
+                             int h,
+                             int d,
+                             vector<T>& scat,
+                             vector<T>& abs) const = 0;
 };

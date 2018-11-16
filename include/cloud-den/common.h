@@ -9,3 +9,10 @@ enum Direction
     NEG_Y,
     NEG_Z
 };
+
+enum Axis
+{
+    X_AXIS,
+    Y_AXIS,
+    Z_AXIS
+};

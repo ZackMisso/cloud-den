@@ -1,11 +1,14 @@
 #pragma once
 
 template <typename T>
-class GaussEmitter : public DensityEmitter<T>
+class PercolationEmitter : public DensityEmitter<T>
 {
 public:
-    GaussEmitter(T x, T y, T z, T s)
-        : cx(x), cy(y), cz(z), sigma(s) { }
+    PercolationEmitter(T p, T t, int runs)
+        : p(p), t(t), runs(runs)
+    {
+        // TODO
+    }
 
     void calculateDensity(T x,
                           T y,
@@ -32,8 +35,7 @@ public:
     }
 
 protected:
-    T cx;
-    T cy;
-    T cz;
-    T sigma;
-};
+    T p;
+    T t;
+    int runs;
+}
