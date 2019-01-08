@@ -42,8 +42,11 @@ add_executable(cloud-den
     include/cloud-den/cloud.h
     include/cloud-den/dense_emitter.h
     include/cloud-den/gauss_emitter.h
+    include/cloud-den/common.h
+    include/cloud-den/density_cloud.h
 
     src/main.cpp
+    src/density_cloud.cpp
 )
 
 #OPENEXR_INCLUDE_DIRS
