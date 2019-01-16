@@ -67,6 +67,13 @@ public:
     void translate(int x, int y, int z);
     void addNoise(double mag);
     void clamp(double min, double max);
+    DensityCloud* doubleCloud() const;
+    DensityCloud* partial(int x_off,
+                          int y_off,
+                          int z_off,
+                          int x_size,
+                          int y_size,
+                          int z_size) const;
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }

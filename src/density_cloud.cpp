@@ -374,4 +374,55 @@ void DensityCloud::mirror(Axis axis)
     }
 }
 
+DensityCloud* DensityCloud::doubleCloud() const
+{
+    DensityCloud* newCloud = new DensityCloud(width, height*2, depth);
+
+    for (int i = 0; i < depth; ++i)
+    {
+        for (int j = 0; j < height; ++j)
+        {
+            for (int k = 0; k < width; ++k)
+            {
+                double value = get(k, j, i);
+
+                newCloud->set(k, j*2, i, value);
+                // newCloud->set(k, j*2, i*2+1, value);
+                newCloud->set(k, j*2+1, i, value);
+                // newCloud->set(k, j*2+1, i*2+1, value);
+                // newCloud->set(k*2+1, j*2, i*2, value);
+                // newCloud->set(k*2+1, j*2, i*2+1, value);
+                // newCloud->set(k*2+1, j*2+1, i*2, value);
+                // newCloud->set(k*2+1, j*2+1, i*2+1, value);
+            }
+        }
+    }
+
+    return newCloud;
+}
+
+DensityCloud* DensityCloud::partial(int x_off,
+                                    int y_off,
+                                    int z_off,
+                                    int x_size,
+                                    int y_size,
+                                    int z_size) const
+{
+    DensityCloud* newCloud = new DensityCloud(x_size, y_size, z_size);
+
+    for (int i = 0; i < z_size; ++i)
+    {
+        for (int j = 0; j < y_size; ++j)
+        {
+            for (int k = 0; k < x_size; ++k)
+            {
+                double value = get(k+x_off, j+y_off, i+z_off);
+                newCloud->set(k, j, i, value);
+            }
+        }
+    }
+
+    return newCloud;
+}
+
 }
