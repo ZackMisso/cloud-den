@@ -21,12 +21,19 @@ int main(int argc, char* argv[])
                                                doublesize->getWidth(),
                                                doublesize->getHeight() / 2,
                                                doublesize->getDepth());
+
     center->writeToFile("/Users/corneria/Documents/Research/testscenes/better_smoke/geometry/cloud_media_bigger.txt");
+
+    PointCloud* boundry = center->tightPointCloud();
+    boundry->writeToFile("/Users/corneria/Documents/Research/testscenes/better_smoke/geometry/cloud_media_bigger_boundry.obj");
+    PointCloud* pointForm = center->pointRepresentation();
+    pointForm->writeToFile("/Users/corneria/Documents/Research/testscenes/better_smoke/geometry/cloud_media_bigger_point.obj");
 
     delete main;
     delete doublesize;
     delete center;
-
+    delete boundry;
+    delete pointForm;
 
     // DensityCloud* right = new DensityCloud("/Users/corneria/Documents/Research/testscenes/smoke_scene/geometry/media_plume.txt");
     // DensityCloud* left = new DensityCloud("/Users/corneria/Documents/Research/testscenes/smoke_scene/geometry/media_plume.txt");

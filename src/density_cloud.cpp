@@ -83,8 +83,6 @@ double DensityCloud::get(int x, int y, int z) const
     if (y < 0 || y >= height) return 0.0;
     if (z < 0 || z >= depth) return 0.0;
 
-    // std::cout << "x: " << x << " y: " << y << " z: " << z << std::endl;
-
     return density[z * (width * height) + y * width + x];
 }
 
@@ -423,6 +421,67 @@ DensityCloud* DensityCloud::partial(int x_off,
     }
 
     return newCloud;
+}
+
+PointCloud* DensityCloud::tightPointCloud() const
+{
+    PointCloud* cloud = new PointCloud();
+
+    for (int k = 0; k < depth; ++k)
+    {
+        for (int i = 0; i < height; ++i)
+        {
+            for (int j = 0; j < width; ++j)
+            {
+                double center = get(j, i, k);
+
+                if (center < 1e-4)
+                {
+                    double up = get(j, i+1, k);
+                    double down = get(j, i-1, k);
+                    double right = get(j+1, i, k);
+                    double left = get(j-1, i, k);
+                    double forward = get(j, i, k+1);
+                    double back = get(j, i, k-1);
+
+                    if (up > 1e-4 || down > 1e-4 || right > 1e-4 ||
+                        left > 1e-4 || forward > 1e-4 || back > 1e-4)
+                    {
+                        cloud->addPoint(Vec3(double(j) / double(width-1) * (1.89) + 0.1,
+                                             double(i) / double(height-1) * (1.89) + 0.1,
+                                             double(k) / double(depth-1) * (0.79) + 0.1));
+                    }
+                }
+            }
+        }
+    }
+
+    return cloud;
+}
+
+PointCloud* DensityCloud::pointRepresentation() const
+{
+    PointCloud* cloud = new PointCloud();
+
+    for (int k = 0; k < depth; ++k)
+    {
+        for (int i = 0; i < height; ++i)
+        {
+            for (int j = 0; j < width; ++j)
+            {
+                double center = get(j, i, k);
+
+                if (center > 1e-4)
+                {
+                    cloud->addPoint(Vec3(double(j) / double(width-1) * (1.89) + 0.1,
+                                         double(i) / double(height-1) * (1.89) + 0.1,
+                                         double(k) / double(depth-1) * (0.79) + 0.1));
+                }
+            }
+        }
+    }
+
+    return cloud;
 }
 
 }
